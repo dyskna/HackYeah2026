@@ -1,0 +1,61 @@
+/* Tokeny z makiet telefonu. Źródło prawdy dla wyglądu. */
+:root {
+  /* kolory */
+  --tlo: #CDD1CA;            /* stalowoszare tło ekranu */
+  --plytka: #E6E8E3;         /* jaśniejsze płytki, przyciski, kabina */
+  --tusz: #15171A;           /* tekst, obramowania */
+  --tusz-pomocniczy: #3F4542;
+  --szyb: #2B2E2F;
+  --wyswietlacz: #0E0F10;
+  --wyswietlacz-ramka: #26292A;
+  --akcent: #F5C400;         /* żółty: działania i elementy użytkownika */
+  --nieaktywny: #B9BDB6;
+
+  /* tekst na wyświetlaczu LED (na czarnym) */
+  --led-bialy: #F2F0E6;      /* jazda, stan domyślny */
+  --led-bursztyn: #FF9A1F;   /* oczekiwanie na miejsce */
+  --led-zielony: #5BE37A;    /* przyjazd, sukces */
+  --led-czerwony: #FF5A4D;   /* awaria, błąd */
+  --led-przygaszony: #8A8F8C;/* brak połączenia */
+  --led-podpis: #A9ADA8;
+  --led-opis: #D7DAD4;
+
+  /* lampki stanu (na jasnym tle) */
+  --lampka-bialy: #FFFFFF;
+  --lampka-bursztyn: #E07A00;
+  --lampka-zielony: #1F9D4D;
+  --lampka-czerwony: #D12B1F;
+  --tekst-sukces: #14602F;
+
+  /* fonty */
+  --font-led: Doto, 'Courier New', monospace;                           /* waga 900, tylko cyfry i krótkie napisy */
+  --font-etykiety: 'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif; /* 600 i 700, etykiety wersalikami */
+  --font-tekst: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+
+  /* rozmiary tekstu */
+  --tekst-led: 68px;         /* 60 do 96 zależnie od treści */
+  --tekst-h1: 38px;
+  --tekst-stan: 20px;
+  --tekst-przycisk: 20px;
+  --tekst-podstawowy: 16px;
+  --tekst-maly: 14px;
+  --tekst-etykieta: 13px;    /* wersaliki, odstęp liter 0.08em */
+
+  /* kształt */
+  --ramka: 2px solid var(--tusz);
+  --strop: 3px solid var(--tusz);   /* linia między piętrami w szybie */
+  --promien-maly: 3px;
+  --promien: 4px;
+  --promien-przycisk: 6px;
+  --cien-przycisk: 0 4px 0 var(--tusz);  /* twardy cień bez rozmycia */
+
+  /* wymiary */
+  --pole-dotyku: 44px;
+  --przycisk-glowny: 64px;
+  --przycisk-drugi: 52px;
+  --kolumna-sterowania: 206px;
+  --szyb-szerokosc: 140px;
+  --pietro-wysokosc: 73px;
+  --odstep: 14px;
+  --margines-ekranu: 12px 16px;
+}

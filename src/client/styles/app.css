@@ -1,0 +1,445 @@
+/* Style aplikacji. Wszystkie wartości wyglądu pochodzą z tokens.css. */
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; background: var(--tlo); }
+
+body {
+  color: var(--tusz);
+  font-family: var(--font-tekst);
+  font-size: var(--tekst-podstawowy);
+  line-height: 1.35;
+  -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--tusz); }
+a:hover { color: var(--tusz-pomocniczy); }
+
+button { font: inherit; color: inherit; }
+
+:focus-visible { outline: 3px solid var(--tusz); outline-offset: 2px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ───────── układ telefonu: kolumna sterowania + szyb ───────── */
+
+:root { --screen-h: 100dvh; }
+
+.phone {
+  min-height: var(--screen-h);
+  padding: var(--margines-ekranu);
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.controls {
+  flex: 0 1 var(--kolumna-sterowania);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--odstep);
+}
+
+.push-bottom { margin-top: auto; display: flex; flex-direction: column; gap: var(--odstep); }
+
+/* Szeroki ekran: szyb zostaje po prawej, kolumna sterowania szersza. */
+@media (min-width: 720px) {
+  .phone { padding: 24px; gap: 32px; }
+  .controls { flex-basis: 380px; }
+}
+
+/* ───────── nagłówek ───────── */
+
+.header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.header__text { display: flex; flex-direction: column; gap: 6px; padding-top: 4px; min-width: 0; }
+.header__title {
+  font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-naglowek);
+  line-height: 1.1; letter-spacing: var(--odstep-liter-przycisk); text-transform: uppercase;
+}
+.conn { display: flex; align-items: center; gap: 6px; font-size: var(--tekst-etykieta); font-weight: 500; color: var(--tusz-pomocniczy); }
+.conn__dot {
+  width: var(--kropka-polaczenia); height: var(--kropka-polaczenia);
+  border-radius: 50%; border: var(--ramka); flex-shrink: 0;
+}
+.conn__dot[data-tone='green'] { background: var(--lampka-zielony); }
+.conn__dot[data-tone='amber'] { background: var(--lampka-bursztyn); }
+
+.icon-btn {
+  width: var(--pole-dotyku); height: var(--pole-dotyku); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--tusz); background: none; border: 0; padding: 0; cursor: pointer;
+}
+.icon-fill-bg { fill: var(--tlo); }
+
+/* ───────── wyświetlacz LED ───────── */
+
+.display {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 10px 12px 12px;
+  background: var(--wyswietlacz);
+  border: var(--ramka);
+  border-radius: var(--promien);
+  box-shadow: var(--ramka-wyswietlacza);
+  --led: var(--led-bialy);
+}
+.display[data-tone='amber'] { --led: var(--led-bursztyn); }
+.display[data-tone='green'] { --led: var(--led-zielony); }
+.display[data-tone='red'] { --led: var(--led-czerwony); }
+.display[data-tone='dim'] { --led: var(--led-przygaszony); }
+
+.display__label {
+  font-family: var(--font-etykiety); font-weight: 600; font-size: var(--tekst-led-podpis);
+  letter-spacing: var(--odstep-liter-led); text-transform: uppercase; color: var(--led-podpis);
+}
+.display__value {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-led); font-weight: 900; line-height: 1;
+  font-size: var(--tekst-led); color: var(--led);
+  white-space: nowrap; overflow: hidden;
+}
+.display__value[data-size='digits'] { font-size: var(--tekst-led-cyfra); }
+.display__value[data-size='large'] { font-size: var(--tekst-led-duzy); }
+.display__value[data-size='word'] { font-size: var(--tekst-led-slowo); }
+.display__value[data-size='activation'] { font-size: var(--tekst-led-aktywacja); }
+.display__desc { font-size: var(--tekst-opis-led); line-height: 1.3; color: var(--led-opis); }
+
+/* ───────── stan, grupa, dostępność ───────── */
+
+.status { display: flex; align-items: flex-start; gap: 8px; }
+.status__lamp {
+  width: var(--lampka-stanu); height: var(--lampka-stanu); margin-top: 4px; flex-shrink: 0;
+  border-radius: 50%; border: var(--ramka);
+}
+.status__lamp[data-tone='white'] { background: var(--lampka-bialy); }
+.status__lamp[data-tone='amber'] { background: var(--lampka-bursztyn); }
+.status__lamp[data-tone='green'] { background: var(--lampka-zielony); }
+.status__lamp[data-tone='red'] { background: var(--lampka-czerwony); }
+.status__lamp[data-tone='dim'] { background: var(--led-przygaszony); }
+.status__text {
+  font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-stan);
+  line-height: 1.15; text-transform: uppercase;
+}
+
+.group-line { font-family: var(--font-etykiety); font-weight: 600; font-size: var(--tekst-grupa); }
+
+.note { margin: 0; font-size: var(--tekst-maly); line-height: 1.4; }
+
+.avail { display: flex; align-items: flex-start; gap: 6px; font-size: var(--tekst-maly); font-weight: 600; }
+.avail svg { flex-shrink: 0; margin-top: 2px; }
+.avail[data-kind='predicted'], .avail[data-kind='confirmed'] { color: var(--tekst-sukces); }
+.avail[data-kind='unconfirmed'] { color: var(--tusz-pomocniczy); }
+
+.alert {
+  padding: 10px 12px; border: var(--ramka); border-radius: var(--promien);
+  background: var(--plytka); font-size: var(--tekst-maly); line-height: 1.4;
+  border-left-width: 6px; border-left-color: var(--lampka-czerwony);
+}
+.alert--info { border-left-color: var(--lampka-bursztyn); }
+
+/* ───────── etykiety pól, wybór piętra ───────── */
+
+.field-label {
+  font-family: var(--font-etykiety); font-weight: 600; font-size: var(--tekst-etykieta);
+  letter-spacing: var(--odstep-liter-etykieta); text-transform: uppercase; color: var(--tusz-pomocniczy);
+}
+
+.floor-picker { display: flex; flex-direction: column; gap: 8px; }
+.floor-grid {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px; justify-items: center;
+}
+.floor-grid[data-large] { gap: 12px; }
+.floor-btn {
+  width: var(--przycisk-pietra); height: var(--przycisk-pietra); padding: 0;
+  border: var(--ramka); border-radius: 50%;
+  background: var(--plytka); color: var(--tusz);
+  box-shadow: var(--cien-maly);
+  font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-pietro);
+  cursor: pointer;
+  transition: transform var(--czas-przejscia), box-shadow var(--czas-przejscia);
+}
+.floor-grid[data-large] .floor-btn {
+  width: var(--przycisk-pietra-duzy); height: var(--przycisk-pietra-duzy); font-size: var(--tekst-pietro-duzy);
+}
+.floor-btn[aria-pressed='true'] { background: var(--akcent); box-shadow: var(--cien-wcisniety); transform: translateY(2px); }
+.floor-btn:disabled { cursor: not-allowed; }
+
+/* ───────── kierunek ───────── */
+
+.direction { display: flex; flex-direction: column; gap: 8px; }
+.dir-toggle { display: grid; grid-template-columns: 1fr 1fr; border: var(--ramka); border-radius: var(--promien); overflow: hidden; }
+.dir-toggle button {
+  min-height: var(--pole-dotyku); border: 0; background: var(--plytka); cursor: pointer;
+  font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-maly); text-transform: uppercase;
+}
+.dir-toggle button + button { border-left: var(--ramka); }
+.dir-toggle button[aria-pressed='true'] { background: var(--akcent); }
+.dir-toggle button:disabled { background: var(--nieaktywny); color: var(--tusz-pomocniczy); cursor: not-allowed; }
+
+/* ───────── suwak liczby osób ───────── */
+
+.people { display: flex; flex-direction: column; gap: 6px; }
+.people__head { display: flex; align-items: baseline; justify-content: space-between; }
+.people__count { font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-pietro); }
+.people__icons { display: flex; justify-content: space-between; }
+.person { width: var(--osoba-szerokosc); height: var(--osoba-wysokosc); fill: none; stroke: var(--tusz); }
+.person--on { fill: var(--tusz); }
+.people__ticks {
+  display: flex; justify-content: space-between; padding: 0 9px;
+  font-family: var(--font-etykiety); font-weight: 600; font-size: var(--tekst-etykieta); color: var(--tusz-pomocniczy);
+}
+
+.people__range {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: var(--pole-dotyku); margin: 0; background: transparent; cursor: pointer;
+}
+.people__range::-webkit-slider-runnable-track { height: var(--suwak-tor); background: var(--tusz); border-radius: 2px; }
+.people__range::-moz-range-track { height: var(--suwak-tor); background: var(--tusz); border-radius: 2px; }
+.people__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: var(--suwak-uchwyt-szer); height: var(--suwak-uchwyt-wys); margin-top: -14px;
+  background: var(--akcent); border: var(--ramka); border-radius: var(--promien); box-shadow: var(--cien-maly);
+}
+.people__range::-moz-range-thumb {
+  width: 24px; height: 34px;
+  background: var(--akcent); border: var(--ramka); border-radius: var(--promien); box-shadow: var(--cien-maly);
+}
+.people__range:disabled { cursor: not-allowed; opacity: 0.6; }
+
+/* ───────── legenda ───────── */
+
+.legend {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: auto auto; justify-content: start; align-items: center; gap: 4px 14px;
+  font-size: var(--tekst-znacznik); color: var(--tusz-pomocniczy);
+}
+.legend li { display: flex; align-items: center; gap: 5px; }
+.legend__lamp { width: var(--lampka); height: var(--lampka); border-radius: 50%; }
+.legend__lamp[data-kind='occupied'] { background: var(--tusz); }
+.legend__lamp[data-kind='free'] { border: var(--ramka-cienka); }
+.legend__lamp[data-kind='mine'] { background: var(--akcent); border: var(--ramka-cienka); }
+
+/* ───────── przyciski ───────── */
+
+.btn-primary {
+  height: var(--przycisk-glowny); margin-bottom: 4px; width: 100%;
+  border: var(--ramka); border-radius: var(--promien-przycisk);
+  background: var(--akcent); color: var(--tusz); box-shadow: var(--cien-przycisk);
+  font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-przycisk);
+  letter-spacing: var(--odstep-liter-przycisk); text-transform: uppercase; cursor: pointer;
+  transition: transform var(--czas-przejscia), box-shadow var(--czas-przejscia);
+}
+.btn-primary:active:not(:disabled) { transform: translateY(3px); box-shadow: var(--cien-wcisniety); }
+.btn-primary:disabled {
+  background: var(--nieaktywny); color: var(--tusz-pomocniczy); border-color: var(--tusz-pomocniczy);
+  box-shadow: none; cursor: not-allowed;
+}
+.btn-primary[aria-busy='true'] { cursor: progress; }
+
+.btn-secondary {
+  height: var(--przycisk-drugi); width: 100%;
+  border: var(--ramka); border-radius: var(--promien-przycisk);
+  background: transparent; color: var(--tusz);
+  font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-podstawowy);
+  letter-spacing: var(--odstep-liter-przycisk); text-transform: uppercase; cursor: pointer;
+}
+.btn-secondary:disabled { color: var(--tusz-pomocniczy); border-color: var(--tusz-pomocniczy); cursor: not-allowed; }
+
+/* ───────── szyb ───────── */
+
+.shaft {
+  --row: calc((100% - var(--szyb-strop-gora)) / var(--floors));
+  --cabin-top: calc(var(--szyb-strop-gora) + var(--pos, 0) * var(--row) + (var(--row) - 3px - var(--kabina-wysokosc)) / 2);
+  position: relative;
+  flex-shrink: 0;
+  width: var(--szyb-szerokosc);
+  height: calc(var(--screen-h) - 24px);
+  min-height: 560px;
+  max-height: 1000px;
+  display: flex; flex-direction: column;
+  border: var(--ramka); border-radius: var(--promien-przycisk);
+  overflow: hidden;
+  background: var(--tlo);
+  position: sticky; top: 12px;
+}
+@media (min-width: 720px) {
+  .shaft { height: calc(var(--screen-h) - 48px); top: 24px; }
+}
+.shaft__cap { height: var(--szyb-strop-gora); background: var(--tusz); flex-shrink: 0; }
+.shaft__row {
+  flex: 1 1 0; min-height: 0;
+  display: grid;
+  grid-template-columns: var(--szyb-kolumna-tabliczek) var(--szyb-kolumna-szybu) var(--szyb-kolumna-znacznikow);
+  border-bottom: var(--strop);
+}
+.shaft__row:last-child { border-bottom: 0; }
+.shaft__plate-cell, .shaft__marks { display: flex; align-items: center; justify-content: center; }
+.shaft__well { background: var(--szyb); }
+
+.plate {
+  width: var(--tabliczka); height: var(--tabliczka);
+  border: var(--ramka); border-radius: var(--promien-maly);
+  background: var(--plytka);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-tabliczka);
+}
+.plate[data-you] { background: var(--akcent); }
+
+.you-badge {
+  padding: 1px 4px; background: var(--akcent); border: var(--ramka); border-radius: var(--promien-maly);
+  font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-znacznik);
+}
+.stop-mark {
+  width: var(--znacznik-postoju); height: var(--znacznik-postoju);
+  border: var(--ramka); border-radius: 50%; background: var(--plytka);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.rope {
+  position: absolute;
+  left: calc(var(--szyb-kolumna-tabliczek) + var(--szyb-kolumna-szybu) / 2 - 1px);
+  top: var(--szyb-strop-gora);
+  width: 2px;
+  height: calc(var(--cabin-top) - var(--szyb-strop-gora));
+  background: var(--lina);
+}
+
+.cabin {
+  position: absolute;
+  left: var(--kabina-lewo);
+  top: var(--cabin-top);
+  width: var(--kabina-szerokosc); height: var(--kabina-wysokosc);
+  border-radius: var(--promien-maly);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  background: var(--kabina-otwarta); border: var(--ramka); color: var(--tusz);
+  overflow: hidden;
+}
+.cabin[data-state='fault'] { background: var(--lampka-czerwony); color: var(--tekst-na-czerwonym); }
+.cabin[data-state='offline'] { background: transparent; border: 2px dashed var(--kabina-offline); }
+
+/* Drzwi: dwa skrzydła rozsuwają się na boki w czasie z konfiguracji (--door-ms). */
+.cabin__door {
+  position: absolute; top: 0; bottom: 0; width: 50%;
+  background: var(--plytka);
+  /* Przy zamykaniu skrzydła od razu jasne; przy otwieraniu ciemnieją dopiero na końcu,
+     żeby lampki zajętości były widoczne przez cały ruch drzwi. */
+  transition: width var(--door-ms, 0ms) linear, background-color var(--door-ms, 0ms) steps(1, start), border-color var(--door-ms, 0ms) steps(1, start);
+}
+.cabin[data-state='open'] .cabin__door { transition-timing-function: linear, steps(1, end), steps(1, end); }
+.cabin__door--l { left: 0; border-right: 1px solid var(--szew-drzwi); }
+.cabin__door--r { right: 0; border-left: 1px solid var(--szew-drzwi); }
+.cabin[data-state='open'] .cabin__door { width: 6px; background: var(--tusz); border-color: var(--tusz); }
+.cabin__body { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.cabin__unknown { font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-pietro); line-height: 1; }
+
+.lamps { display: grid; grid-template-columns: repeat(3, var(--lampka)); gap: 4px; }
+.lamp {
+  width: var(--lampka); height: var(--lampka); border-radius: 50%; box-sizing: border-box;
+  border: 1.5px solid transparent;
+  /* Lampki zmieniają się po kolei, nie wszystkie naraz. */
+  transition: background-color 220ms ease, border-color 220ms ease;
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+.lamp[data-kind='occupied'] { background: var(--tusz); }
+.lamp[data-kind='mine'] { background: var(--akcent); border: var(--ramka-cienka); }
+.lamp[data-kind='free'] { border: 1.5px solid var(--lina); }
+
+/* Bez płynnych przejść przy ograniczeniu ruchu. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* ───────── ekrany pomocnicze ───────── */
+
+.page {
+  min-height: 100dvh; max-width: 480px; margin: 0 auto;
+  padding: var(--margines-aktywacji);
+  display: flex; flex-direction: column;
+}
+.page h1 {
+  margin: 0; font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-h1);
+  line-height: 1.02; text-transform: uppercase;
+}
+.page p { font-size: var(--tekst-grupa); }
+
+.loading { min-height: 100dvh; display: flex; align-items: center; justify-content: center; }
+
+/* Podgląd: dokładna ramka telefonu 390×844 (niezależna od okna przeglądarki). */
+.preview-frame { --screen-h: 844px; width: 390px; height: 844px; overflow: hidden; position: relative; }
+.preview-frame .phone { min-height: 844px; }
+
+/* ───────── aktywacja i ustawienia ───────── */
+
+.page .page__title { margin-top: 32px; }
+.page .page__title--near { margin-top: 20px; }
+.page__address { margin-top: 8px; font-size: var(--tekst-grupa); color: var(--tusz-pomocniczy); }
+.page .page__lead { margin: 20px 0 0; font-size: var(--tekst-grupa); }
+.page .page__lead--near { margin-top: 12px; }
+.page__section { margin-top: 24px; }
+.page .push-bottom { margin-top: auto; padding-top: 24px; }
+.hint-text { font-size: var(--tekst-maly); color: var(--tusz-pomocniczy); }
+.hint-text--small { font-size: var(--tekst-etykieta); }
+
+.tile {
+  position: relative; display: flex; flex-direction: column; gap: 2px;
+  margin-top: 20px; padding: 20px 24px;
+  border: var(--ramka); border-radius: var(--promien); background: var(--plytka);
+}
+.tile__big { font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-pojemnosc); line-height: 1; text-transform: uppercase; }
+/* Nity w rogach tabliczki znamionowej dźwigu. */
+.rivet { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--tusz); }
+.rivet:nth-child(1) { left: 8px; top: 8px; }
+.rivet:nth-child(2) { right: 8px; top: 8px; }
+.rivet:nth-child(3) { left: 8px; bottom: 8px; }
+.rivet:nth-child(4) { right: 8px; bottom: 8px; }
+.tile--next { margin-top: 28px; padding: 16px; gap: 6px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.text-input {
+  height: var(--pole-tekstowe); padding: 0 14px;
+  border: var(--ramka); border-radius: var(--promien);
+  background: var(--plytka); color: var(--tusz);
+  font-family: var(--font-tekst); font-size: var(--tekst-grupa);
+}
+
+.page--settings { padding: var(--margines-ekranu); gap: 10px; }
+.settings-head { display: flex; align-items: center; gap: 4px; height: 48px; margin-left: -10px; }
+.settings-head h1 { font-size: var(--tekst-tytul-ustawien); letter-spacing: 0.02em; line-height: 1.1; }
+.section-label {
+  margin-top: 12px; font-family: var(--font-etykiety); font-weight: 600; font-size: var(--tekst-etykieta);
+  letter-spacing: var(--odstep-liter-etykieta); text-transform: uppercase; color: var(--tusz-pomocniczy);
+}
+.section-label--gap { margin-top: 16px; }
+.list-box { display: flex; flex-direction: column; border: var(--ramka); border-radius: var(--promien); background: var(--plytka); overflow: hidden; }
+.list-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: var(--wiersz-ustawien); width: 100%; padding: 10px 16px;
+  border: 0; border-bottom: var(--ramka); background: transparent; text-align: left; color: var(--tusz);
+}
+.list-row:last-child { border-bottom: 0; }
+button.list-row { cursor: pointer; }
+.list-row__text { display: flex; flex-direction: column; gap: 2px; }
+.list-row__value { font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-wartosc); }
+
+/* Znacznik wsiadania / wysiadania obok kabiny. */
+.board-badge {
+  position: absolute; z-index: 2;
+  left: calc(var(--szyb-kolumna-tabliczek) + var(--szyb-kolumna-szybu) - 4px);
+  top: calc(var(--cabin-top) - 10px);
+  padding: 0 4px; border: var(--ramka); border-radius: var(--promien-maly);
+  font-family: var(--font-etykiety); font-weight: 700; font-size: var(--tekst-znacznik); line-height: 16px;
+  background: var(--plytka); color: var(--tusz);
+  animation: board-badge 2.6s ease forwards;
+}
+.board-badge[data-kind='in'] { background: var(--akcent); }
+@keyframes board-badge {
+  0% { opacity: 0; transform: translateY(6px); }
+  12% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}

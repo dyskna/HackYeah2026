@@ -1,0 +1,41 @@
+{
+  "name": "winda",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.client.json",
+    "e2e": "node scripts/e2e.mjs",
+    "dev": "vite dev",
+    "deploy": "vite build && wrangler deploy",
+    "cf:login": "wrangler login",
+    "cf:whoami": "wrangler whoami",
+    "cf:tail": "wrangler tail winda",
+    "cf:secret:admin": "wrangler secret put ADMIN_PASSWORD",
+    "cf:types": "wrangler types",
+    "build": "vite build",
+    "preview": "vite preview",
+    "ui-flow": "node scripts/ui-flow.mjs",
+    "qr": "node scripts/qr.mjs",
+    "cf:secret:demo": "node scripts/qr.mjs --print-token | wrangler secret put DEMO_ACTIVATION_CODE"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.62.5",
+    "@cloudflare/workers-types": "^5.20261003.1",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "qrcode": "^1.5.4",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3",
+    "wrangler": "^4.147.0"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  }
+}
