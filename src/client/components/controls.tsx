@@ -66,18 +66,20 @@ export function PeopleSlider({
   max,
   onChange,
   disabled = false,
+  label = 'Ile osób jedzie?',
 }: {
   value: number;
   max: number;
   onChange: (n: number) => void;
   disabled?: boolean;
+  label?: string;
 }) {
   const id = useId();
   const ticks = Array.from({ length: max }, (_, i) => i + 1);
   return (
     <div className="people">
       <div className="people__head">
-        <FieldLabel htmlFor={id}>Ile osób jedzie?</FieldLabel>
+        <FieldLabel htmlFor={id}>{label}</FieldLabel>
         <span className="people__count" aria-hidden>
           {people(value)}
         </span>

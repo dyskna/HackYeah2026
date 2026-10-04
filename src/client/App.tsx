@@ -8,6 +8,7 @@ import { ResidentScreen } from './screens/ResidentScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 
 const Gallery = import.meta.env.DEV ? lazy(() => import('./screens/Gallery')) : null;
+const AdminScreen = lazy(() => import('./screens/AdminScreen'));
 const api = new Api();
 
 // ── prosty router na History API ──
@@ -51,7 +52,7 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    if (path !== '/aktywacja' && path !== '/podglad') void load();
+    if (path !== '/aktywacja' && path !== '/podglad' && path !== '/admin') void load();
   }, [load, path]);
 
   const onUnauthorized = useCallback(() => setSession({ kind: 'none', revoked: true }), []);
@@ -60,6 +61,13 @@ export function App() {
     return (
       <Suspense fallback={null}>
         <Gallery />
+      </Suspense>
+    );
+  }
+  if (path === '/admin') {
+    return (
+      <Suspense fallback={<div className="loading" role="status">Wczytywanie…</div>}>
+        <AdminScreen />
       </Suspense>
     );
   }

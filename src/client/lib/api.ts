@@ -4,7 +4,15 @@
  * sieci wysyłają ten sam requestId (serwer zwraca istniejące zgłoszenie).
  * Ekran przechodzi w oczekiwanie dopiero po odpowiedzi serwera.
  */
-import type { ApiError, BuildingInfo, InstallationView, MyCallView, ResidentView } from '../../shared/protocol';
+import type {
+  ActivationCodeView,
+  AdminInstallationView,
+  ApiError,
+  BuildingInfo,
+  InstallationView,
+  MyCallView,
+  ResidentView,
+} from '../../shared/protocol';
 import type { Direction } from '../../shared/model';
 
 export class ApiFailure extends Error {
@@ -101,6 +109,39 @@ export class Api {
 
   updateMe(patch: { name?: string | null; defaultFloor?: number }) {
     return this.req<{ installation: InstallationView }>('PATCH', '/api/me', patch);
+  }
+
+  // ── administrator ──
+  adminSession() {
+    return this.req<{ admin: boolean }>('GET', '/api/admin/session');
+  }
+
+  adminLogin(password: string) {
+    return this.req<{ admin: boolean }>('POST', '/api/admin/login', { password });
+  }
+
+  adminLogout() {
+    return this.req<{ admin: boolean }>('POST', '/api/admin/logout');
+  }
+
+  adminCreateCode(ttlHours: number) {
+    return this.req<ActivationCodeView>('POST', '/api/admin/codes', { ttlHours });
+  }
+
+  adminInstallations() {
+    return this.req<AdminInstallationView[]>('GET', '/api/admin/installations');
+  }
+
+  adminRevoke(installationId: string) {
+    return this.req<{ revoked: true }>('DELETE', `/api/admin/installations/${encodeURIComponent(installationId)}`);
+  }
+
+  adminSim(input: unknown) {
+    return this.req<{ ok: true }>('POST', '/api/admin/sim', input);
+  }
+
+  adminReset() {
+    return this.req<{ ok: true }>('POST', '/api/admin/reset');
   }
 
   activationInfo(code: string) {
