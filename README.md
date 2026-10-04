@@ -38,12 +38,6 @@ LiftMe daje mieszkańcom kontrolę nad czasem. Wyobraź sobie Ubera, ale dla win
 | :---: | :---: | :---: | :---: |
 | ![Przyjazd](docs/zrzuty/etap4/przebieg/06-przyjazd.png) | ![Awaria](docs/zrzuty/etap4/przebieg/07-awaria.png) | ![Brak połączenia](docs/zrzuty/etap4/przebieg/08-brak-polaczenia.png) | ![Ustawienia](docs/zrzuty/etap4/przebieg/09-ustawienia.png) |
 
-### Panel administratora
-
-| Symulator | Kody QR | Telefony |
-| :---: | :---: | :---: |
-| ![Symulator](docs/zrzuty/etap6/admin-1-symulator.png) | ![Kody](docs/zrzuty/etap6/admin-2-kody.png) | ![Telefony](docs/zrzuty/etap6/admin-3-telefony.png) |
-
 ## 🔹 Pod maską
 
 Nie poszliśmy na skróty.
@@ -130,4 +124,4 @@ design/      # makiety ekranów i tokeny designu
 docs/        # dokumentacja, plan, zrzuty ekranu
 ```
 
-Pełny opis działania: [`docs/dokumentacja.md`](docs/dokumentacja.md). Plan techniczny: [`docs/PLAN.md`](docs/PLAN.md).
+Pełny opis działania: [`docs/dokumentacja.md`](docs/dokumentacja.md).
